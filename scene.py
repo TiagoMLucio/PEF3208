@@ -44,20 +44,25 @@ class Scooter(Scene):
         dot_C = Dot(point=((UP + LEFT) * math.sin(math.pi/180 * 45)) + LEFT + DOWN * 2)
         dot_E = Dot(point=((DOWN * math.sin(math.pi/180 * 45) + LEFT * math.sin(math.pi/180 * 45)/math.tan(math.pi/180 * 70)) + (UP + LEFT) * math.sin(math.pi/180 * 45) + LEFT + DOWN * 2))
         dot_D = Dot(point=((DOWN * math.sin(math.pi/180 * 45) + LEFT * math.sin(math.pi/180 * 45)/math.tan(math.pi/180 * 70)) + (UP + LEFT) * math.sin(math.pi/180 * 45) + LEFT + RIGHT * 3 * math.cos(math.pi/180 * 70) + UP * 3 * math.sin(math.pi/180 * 70) + DOWN * 2))
-        self.add(dot_A, dot_B, dot_E, dot_D)
         line_AB = Line(dot_A.get_center(), dot_B.get_center())
         line_BC = Line(dot_B.get_center(), dot_C.get_center())
         line_CD = Line(dot_C.get_center(), dot_D.get_center())
         line_CE = Line(dot_C.get_center(), dot_E.get_center())
         self.play(
+            Write(dot_A),
             Write(line_AB)
         )
         self.play(
+            Write(dot_B),
             Write(line_BC)
         )
         self.play(
             Write(line_CD),
             Write(line_CE)
+        )
+        self.play(
+            Write(dot_D),
+            Write(dot_E)
         )
 
         self.wait()
@@ -164,6 +169,11 @@ class Scooter(Scene):
         joint1_line = Line(color=ORANGE).scale(0.3).next_to(joint_1, DOWN * 0.01)
         joint2_line = Line(color=ORANGE).scale(0.3).next_to(joint_2, DOWN * 0.5)
 
+        joint1_line1 = Line(start=LEFT + DOWN * 3, color=ORANGE).scale(0.04).next_to(joint_1, DOWN * 0.01).shift(LEFT * 0.3)
+        joint1_line2 = Line(start=LEFT + DOWN * 3, color=ORANGE).scale(0.04).next_to(joint_1, DOWN * 0.01).shift(LEFT * 0.2)
+        joint1_line3 = Line(start=LEFT + DOWN * 3, color=ORANGE).scale(0.04).next_to(joint_1, DOWN * 0.01).shift(LEFT * 0.1)
+
+
         detail3 = Tex(r"Definições dos Vínculos", color=ORANGE).to_corner(UP + RIGHT)
 
         self.play(
@@ -171,7 +181,10 @@ class Scooter(Scene):
             Write(joint_1),
             Write(joint_2),
             Write(joint1_line),
-            Write(joint2_line)
+            Write(joint2_line),
+            Write(joint1_line1),
+            Write(joint1_line2),
+            Write(joint1_line3)
         )
 
         self.wait()
@@ -199,6 +212,16 @@ class Scooter(Scene):
             Write(label_YE),
             Write(label_YA),
             Write(label_XE)
+        )
+
+        self.wait()
+
+        scooter = VGroup(dot_A, dot_B, dot_D, dot_E, line_AB, line_BC, line_CD, line_CE, label_A, label_B, label_C, label_D, label_E, 
+        label_l1, label_l2, label_l3, label_l4, dashed_line, alpha, beta, alpha_label, beta_label, F, f_0, f_1, f_2, f_3, f_4, f_5, f_6, f_line,
+        label_F, label_f, joint_1, joint_2, joint1_line, joint2_line, joint1_line1, joint1_line2, joint1_line3, Y_E, Y_A, X_E, label_YE, label_YA, label_XE)
+
+        self.play(
+            scooter.animate.shift(4 * LEFT).scale(0.8)
         )
 
         self.wait()
