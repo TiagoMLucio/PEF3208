@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/3163782288_903371998_3926013991.mp4'
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/2201830969_3503346753_3509749022.mp4'
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/2201830969_2648952915_2146351767.mp4'
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/2201830969_1767634784_82646942.mp4'
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/2201830969_2275488051_3961999305.mp4'
+file 'file:/manim/project/media/videos/scene/480p15/partial_movie_files/DrawScooter/2201830969_3503346753_714083652.mp4'
