@@ -327,7 +327,7 @@ class Scooter(Scene):
         dot_C1 = Dot().next_to(dot_A2, LEFT * 15)
         line_AC1 = Line(start=dot_A2.get_center(), end=dot_C1.get_center())
 
-        cut_c1 = VGroup(dot_A2, dot_C1, line_AC1).next_to(scooter, RIGHT * 15)
+        VGroup(dot_A2, dot_C1, line_AC1).next_to(scooter, RIGHT * 15)
 
         label_A2 = Tex(r"A", font_size=20).next_to(dot_A2, 0.5 * RIGHT)
         label_C1_2 = MathTex(r"C_1", font_size=20).next_to(dot_C1, 0.5 * DOWN)
@@ -400,4 +400,31 @@ class Scooter(Scene):
             Write(label_M1)
         )
 
+        self.wait()
+
+        x1_base = Line(UP, DOWN).scale(0.2).next_to(Y_A2, DOWN)
+        x1_axis = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1).scale(0.5).next_to(x1_base, LEFT).shift(0.25 * RIGHT)
+        label_x1 = MathTex(r"x_1", font_size=24).next_to(x1_axis, 0.4 * UP)
+
+        self.play(
+            Create(x1_base),
+            Create(x1_axis),
+        )
+
+        self.play(
+            Write(label_x1)
+        )
+
+        cut_c1 = VGroup(dot_A2, dot_C1, line_AC1, label_A2, label_C1_2, Y_A2, label_YA2, f_0_2, f_1_2, f_2_2, f_3_2, f_4_2,
+        f_5_2, f_6_2, f_7_2, f_8_2, f_line2, label_f2, N_1, V_1, M_1, label_N1, label_V1, label_M1, x1_base, x1_axis, label_x1)
+
         self.wait(2)
+
+        self.play(
+            cut_c1.animate.to_corner(UR).scale(0.6)
+        )
+
+        self.wait()
+
+        
+
