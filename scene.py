@@ -270,7 +270,7 @@ class Scooter(Scene):
             FadeOut(framebox3)
         )
 
-        self.wait(3)
+        self.wait(2)
 
         title2 = Tex(r"Cortes na Estrutura").to_corner(UL)
 
@@ -315,7 +315,7 @@ class Scooter(Scene):
             Write(label_C4)
         )
 
-        self.wait(2)
+        self.wait()
 
         retangle_c1 = SurroundingRectangle(Line(start=C_1.get_center(), end=dot_A.get_center()))
 
@@ -408,7 +408,7 @@ class Scooter(Scene):
 
         self.play(
             Create(x1_base),
-            Create(x1_axis),
+            Create(x1_axis)
         )
 
         self.play(
@@ -879,24 +879,51 @@ class Scooter(Scene):
 
         self.wait()
 
-        vss = VGroup(vs1, vs2)
+        framebox9 = SurroundingRectangle(VGroup(vs1, vs2), color=WHITE, buff = .1)
+
+        self.play(
+            Create(framebox9)
+        )
+
+        vss = VGroup(vs1, vs2, framebox9)
 
         self.play(
             vss.animate.to_corner(UR)
         )
 
-        title5 = Tex(r"Reações de Apoio", color=ORANGE).to_corner(UL)
+        subtitle5 = Tex(r"Reações de Apoio", color=ORANGE, font_size=20).to_corner(UL)
+
+        eq_YE2 = MathTex(r"Y_E = ", color=ORANGE, font_size=20)
+        eq_YA2 = MathTex(r"Y_A = ", color=ORANGE, font_size=20)
+        eq_XE2 = MathTex(r"X_E = ", color=ORANGE, font_size=20)
+
+        subtitle6 = Tex(r"Momento Fletor Máximo", color=PURPLE, font_size=20).to_corner(UL)
+
+        eq_Mmax = MathTex(r"M_{max} = ", color=PURPLE, font_size=20)
+
+        reactions = VGroup(subtitle5, eq_YE2, eq_YA2, eq_XE2).arrange(DOWN)
+        moment = VGroup(subtitle6, eq_Mmax).arrange(DOWN)
+
+        equations = VGroup(reactions, moment).arrange(DOWN).next_to(scooter, 4 * RIGHT).shift(UP)
 
         self.play(
-            Transform(model, title5)
+            Write(subtitle5)
+        )
+
+        self.play(
+            Write(eq_YE2),
+            Write(eq_YA2),
+            Write(eq_XE2)
         )
 
         self.wait()
 
-        title6 = Tex(r"Momento Fletor Máximo", color=PURPLE).to_corner(UL)
+        self.play(
+            Write(subtitle6)
+        )
 
         self.play(
-            Transform(model, title6)
+            Write(eq_Mmax)
         )
 
         self.wait()
@@ -906,7 +933,16 @@ class Scooter(Scene):
         self.play(
             Transform(model, title7),
             FadeOut(scooter),
-            FadeOut(vss)
+            FadeOut(vss),
+            FadeOut(C_1),
+            FadeOut(C_2),
+            FadeOut(C_3),
+            FadeOut(C_4),
+            FadeOut(label_C1),
+            FadeOut(label_C2),
+            FadeOut(label_C3),
+            FadeOut(label_C4),
+            FadeOut(equations)
         )
 
         self.wait(5)
