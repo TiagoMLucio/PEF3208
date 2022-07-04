@@ -31,6 +31,7 @@ class Scooter(Scene):
         line_BC = Line(dot_B.get_center(), dot_C.get_center())
         line_CD = Line(dot_C.get_center(), dot_D.get_center())
         line_CE = Line(dot_C.get_center(), dot_E.get_center())
+
         self.play(
             Write(dot_A),
             Write(line_AB)
@@ -581,3 +582,245 @@ class Scooter(Scene):
         )
 
         self.wait()
+
+        retangle_c3 = SurroundingRectangle(Line(start=C_3.get_center(), end=dot_E.get_center())).rotate(-PI * 20/180)
+
+        self.play(
+            Create(retangle_c3)
+        )
+
+        dot_C3 = Dot()
+        dot_E2 = Dot().next_to(dot_C3, LEFT * 15)
+        line_C3E = Line(start=dot_C3.get_center(), end=dot_E2.get_center())
+
+        VGroup(dot_C3, dot_E2, line_C3E).next_to(scooter, RIGHT * 10)
+
+        label_E2 = Tex(r"E", font_size=20).next_to(dot_E2, 0.5 * DL)
+        label_C3_2 = MathTex(r"C_3", font_size=20).next_to(dot_C3, 0.5 * DOWN)
+
+        self.add(
+            dot_E2, line_C3E, dot_C3, label_E2, label_C3_2
+        )
+
+        Y_E2 = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, DOWN)
+        X_E2 = Arrow(start=LEFT * 0.075, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, LEFT * 1.5) 
+
+        label_YE2 = MathTex(r"Y_E", font_size=24, color=ORANGE).next_to(Y_E2, 0.4 * LEFT)
+        label_XE2 = MathTex(r"X_E", font_size=24, color=ORANGE).next_to(X_E2, 0.4 * DOWN)
+
+        self.play(
+            Create(Y_E2),
+            Create(X_E2),
+            Write(label_YE2),
+            Write(label_XE2)
+        )
+
+        self.wait()
+
+        N_3 = Arrow(start=LEFT, end=RIGHT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_C3, RIGHT * 0.5, buff=.5)
+        V_3 = Arrow(start=UP, end=DOWN, max_tip_length_to_length_ratio=0.1, color=GREEN).scale(0.8).next_to(dot_C3, RIGHT * 0.5).shift(0.5 * DOWN)
+        M_3 = CurvedArrow(1.2 * DOWN, 1.2 * UP, radius= 2, color=PURPLE).scale(0.6).next_to(dot_C3, RIGHT).shift(0.4 * RIGHT)
+
+        label_N3 = MathTex(r"N_3", font_size=24, color=RED).next_to(N_3, 0.5 * RIGHT)
+        label_V3 = MathTex(r"V_3", font_size=24, color=GREEN).next_to(V_3, 0.5 * DOWN)
+        label_M3 = MathTex(r"M_3", font_size=24, color=PURPLE).next_to(M_3, 0.5 * UP).shift(0.2 * RIGHT)
+        
+        self.play(
+            Create(N_3),
+            Create(V_3),
+            Create(M_3)
+        )
+
+        self.play(
+            Write(label_N3),
+            Write(label_V3),
+            Write(label_M3)
+        )
+
+        x3_base = Line(UP, DOWN).scale(0.2).next_to(Y_E2, DOWN)
+        x3_axis = Arrow(start=LEFT, end=RIGHT, max_tip_length_to_length_ratio=0.1).scale(0.5).next_to(x3_base, RIGHT).shift(0.25 * LEFT)
+        label_x3 = MathTex(r"x_3", font_size=24).next_to(x3_axis, 0.4 * UP)
+
+        self.play(
+            Create(x3_base),
+            Create(x3_axis),
+        )
+
+        self.play(
+            Write(label_x3)
+        )
+
+        cut_c3 = VGroup(dot_E2, dot_C3, line_C3E, label_E2, label_C3_2, Y_E2, X_E2, label_YE2, label_XE2, 
+        N_3, V_3, M_3, label_N3, label_V3, label_M3, x3_base, x3_axis, label_x3)
+
+        self.wait(2)
+
+        self.play(
+            cut_c3.animate.to_corner(UR).scale(0.6)
+        )
+
+        self.wait()
+
+        subtitle3 = Tex(r"Impondo Equilíbrio na Subestrutura", font_size=24).next_to(cut_c3, 2 * DOWN)
+
+        eq_N3 = MathTex(r"N_3 = - Y_E\cdot \sin{\beta}", font_size=20)
+        eq_V3 = MathTex(r"V_3 = - Y_E\cdot \cos{\beta}", font_size=20)
+        eq_M3 = MathTex(r"M_3 = Y_E\cdot \cos{\beta}\cdot x_3", font_size=20)
+
+        eqs_C3 = VGroup(eq_N3, eq_V3, eq_M3).arrange(DOWN).next_to(subtitle3, 2 * DOWN)
+
+        self.play(
+            Write(subtitle3)            
+        )
+
+        self.play(
+            Write(eqs_C3)
+        )
+
+        self.wait()
+
+        framebox6 = SurroundingRectangle(eqs_C3, buff = .1)
+
+        self.play(
+            Create(framebox6)
+        )
+
+        self.play(
+            FadeOut(framebox6)
+        )
+
+        self.wait(2)
+
+        self.play(
+            FadeOut(eqs_C3),
+            FadeOut(cut_c3),
+            FadeOut(subtitle3),
+            FadeOut(retangle_c3)
+        )
+
+        self.wait()
+
+        retangle_c4 = SurroundingRectangle(Line(start=C_4.get_center(), end=dot_B.get_center())).rotate(-PI * 45/180)
+
+        self.play(
+            Create(retangle_c4)
+        )
+
+        dot_B2 = Dot()
+        dot_C4 = Dot().next_to(dot_B2, LEFT * 10)
+        line_BC4 = Line(start=dot_B2.get_center(), end=dot_C4.get_center())
+
+        VGroup(dot_B2, dot_C4, line_BC4).next_to(scooter, RIGHT * 15)
+
+        label_B2 = Tex(r"B", font_size=20).next_to(dot_B2, 0.5 * DL)
+        label_C4_2 = MathTex(r"C_4", font_size=20).next_to(dot_C4, 0.5 * DOWN)
+
+        self.add(
+            dot_B2, line_BC4, dot_C4, label_B2, label_C4_2
+        )
+
+        N_aux = Arrow(start=LEFT, end=RIGHT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_B2, RIGHT * 0.5, buff=.5)
+        V_aux = Arrow(start=UP, end=DOWN, max_tip_length_to_length_ratio=0.1, color=GREEN).scale(0.8).next_to(dot_B2, RIGHT * 0.5).shift(0.5 * DOWN)
+        M_aux = CurvedArrow(1.2 * DOWN, 1.2 * UP, radius= 2, color=PURPLE).scale(0.6).next_to(dot_B2, RIGHT).shift(0.4 * RIGHT)
+
+        label_Naux = MathTex(r"\dfrac{q\cdot l_1 - Y_A}{\sin{\alpha}}", font_size=24, color=RED).next_to(N_aux, 0.5 * RIGHT)
+        label_Vaux = MathTex(r"\dfrac{Y_A - q\cdot l_1}{\sin{\alpha}}", font_size=24, color=GREEN).next_to(V_aux, 0.5 * DOWN)
+        label_Maux = MathTex(r"\dfrac{q\cdot l_1^2}{2}", font_size=24, color=PURPLE).next_to(M_aux, 0.5 * UP).shift(0.2 * RIGHT)
+
+        self.play(
+            Create(N_aux),
+            Create(V_aux),
+            Create(M_aux),
+            Write(label_Naux),
+            Write(label_Vaux),
+            Write(label_Maux)
+        )
+
+        self.wait()
+
+        N_4 = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_C4, LEFT * 0.5, buff=.5)
+        V_4 = Arrow(start=DOWN, end=UP, max_tip_length_to_length_ratio=0.1, color=GREEN).scale(0.8).next_to(dot_C4, LEFT * 0.5).shift(0.5 * UP)
+        M_4 = CurvedArrow(1.2 * DOWN, 1.2 * UP, radius= -2, color=PURPLE).scale(0.6).next_to(dot_C4, LEFT).shift(0.4 * LEFT)
+
+        label_N4 = MathTex(r"N_4", font_size=24, color=RED).next_to(N_4, 0.5 * LEFT)
+        label_V4 = MathTex(r"V_4", font_size=24, color=GREEN).next_to(V_4, 0.5 * UP)
+        label_M4 = MathTex(r"M_4", font_size=24, color=PURPLE).next_to(M_4, 0.5 * UP).shift(0.2 * LEFT)
+        
+        self.play(
+            Create(N_4),
+            Create(V_4),
+            Create(M_4)
+        )
+
+        self.play(
+            Write(label_N4),
+            Write(label_V4),
+            Write(label_M4)
+        )
+
+        x4_base = Line(UP, DOWN).scale(0.2).next_to(dot_B2, 2 * DOWN)
+        x4_axis = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1).scale(0.5).next_to(x4_base, LEFT).shift(0.25 * RIGHT)
+        label_x4 = MathTex(r"x_4", font_size=24).next_to(x4_axis, 0.4 * UP)
+
+        self.play(
+            Create(x4_base),
+            Create(x4_axis),
+        )
+
+        self.play(
+            Write(label_x4)
+        )
+
+        cut_c4 = VGroup(dot_B2, dot_C4, line_BC4, label_B2, label_C4_2, N_aux, V_aux, M_aux, label_Naux, label_Vaux, label_Maux,
+        N_4, V_4, M_4, label_N4, label_V4, label_M4, x4_base, x4_axis, label_x4)
+
+        self.wait(2)
+
+        self.play(
+            cut_c4.animate.to_corner(UR).scale(0.6)
+        )
+
+        self.wait()
+
+        subtitle4 = Tex(r"Impondo Equilíbrio na Subestrutura", font_size=24).next_to(cut_c4, 2 * DOWN)
+
+        eq_N4 = MathTex(r"N_4 = \dfrac{q\cdot l_1 - Y_A}{\sin{\alpha}}", font_size=20)
+        eq_V4 = MathTex(r"V_4 = \dfrac{q\cdot l_1 - Y_A}{\sin{\alpha}}", font_size=20)
+        eq_M4 = MathTex(r"M_4 = \dfrac{q\cdot l_1^2}{2} + \dfrac{q\cdot l_1 - Y_A}{\sin{\alpha}}\cdot x_4", font_size=20)
+
+        eqs_C4 = VGroup(eq_N4, eq_V4, eq_M4).arrange(DOWN).next_to(subtitle4, 2 * DOWN)
+
+        self.play(
+            Write(subtitle4)            
+        )
+
+        self.play(
+            Write(eqs_C4)
+        )
+
+        self.wait()
+
+        framebox7 = SurroundingRectangle(eqs_C4, buff = .1)
+
+        self.play(
+            Create(framebox7)
+        )
+
+        self.play(
+            FadeOut(framebox7)
+        )
+
+        self.wait(2)
+
+        self.play(
+            FadeOut(eqs_C4),
+            FadeOut(cut_c4),
+            FadeOut(subtitle4),
+            FadeOut(retangle_c4)
+        )
+
+        self.wait()
+
+
+
+
