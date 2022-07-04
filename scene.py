@@ -904,7 +904,10 @@ class Scooter(Scene):
         reactions = VGroup(subtitle5, eq_YE2, eq_YA2, eq_XE2).arrange(DOWN)
         moment = VGroup(subtitle6, eq_Mmax).arrange(DOWN)
 
-        equations = VGroup(reactions, moment).arrange(DOWN).next_to(scooter, 4 * RIGHT).shift(UP)
+        equations = VGroup(reactions, moment).arrange(2 * DOWN).next_to(scooter, 4 * RIGHT).shift(2 * UP)
+
+        framebox10 = SurroundingRectangle(dot_B, color=PURPLE, buff=.1)
+        arrow_toB = CurvedArrow(eq_Mmax.get_bottom() + 0.1 * DOWN, framebox10.get_corner(DR) + 0.1 * DR, radius= -4, color=PURPLE)
 
         self.play(
             Write(subtitle5)
@@ -924,6 +927,11 @@ class Scooter(Scene):
 
         self.play(
             Write(eq_Mmax)
+        )
+
+        self.play(
+            Create(framebox10),
+            Create(arrow_toB)
         )
 
         self.wait()
