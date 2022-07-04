@@ -847,9 +847,67 @@ class Scooter(Scene):
             FadeOut(framebox8)
         )
 
-        self.add(
+        self.play(
             FadeOut(M_maxs)
         )
 
         self.wait()
+
+
+        title4 = Tex(r"Exemplo com Valores Concretos").to_corner(UL)
+
+        self.play(
+            Transform(model, title4)
+        )
+
+        v_l1 = MathTex(r"l_1 = ", font_size=20)
+        v_l2 = MathTex(r"l_2 = ", font_size=20)
+        v_l3 = MathTex(r"l_3 = ", font_size=20)
+        v_l4 = MathTex(r"l_4 = ", font_size=20)
+        v_alpha = MathTex(r"\alpha = 45^\circ", font_size=20)
+        v_beta = MathTex(r"\beta = 75^\circ", font_size=20)
+        v_F = MathTex(r"F = 20\ N", font_size=20)
+        v_q = MathTex(r"q = ", font_size=20)
+
+        vs1 = VGroup(v_l1, v_l2, v_l3, v_l4).arrange(DOWN).next_to(scooter, 6 * RIGHT)
+        vs2 = VGroup(v_alpha, v_beta, v_F, v_q).arrange(DOWN).next_to(vs1, 4 * RIGHT)
+
+        self.play(
+            Write(vs1),
+            Write(vs2)
+        )
+
+        self.wait()
+
+        vss = VGroup(vs1, vs2)
+
+        self.play(
+            vss.animate.to_corner(UR)
+        )
+
+        title5 = Tex(r"Reações de Apoio", color=ORANGE).to_corner(UL)
+
+        self.play(
+            Transform(model, title5)
+        )
+
+        self.wait()
+
+        title6 = Tex(r"Momento Fletor Máximo", color=PURPLE).to_corner(UL)
+
+        self.play(
+            Transform(model, title6)
+        )
+
+        self.wait()
+
+        title7 = Tex(r"Diagramas de Esforços Solicitantes").to_corner(UL)
+
+        self.play(
+            Transform(model, title7),
+            FadeOut(scooter),
+            FadeOut(vss)
+        )
+
+        self.wait(5)
 
