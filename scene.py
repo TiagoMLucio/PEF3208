@@ -1,3 +1,4 @@
+from telnetlib import DO
 from manim import *
 import math
 
@@ -221,35 +222,74 @@ class Scooter(Scene):
         label_F, label_f, joint_1, joint_2, joint1_line, joint2_line, joint1_line1, joint1_line2, joint1_line3, Y_E, Y_A, X_E, label_YE, label_YA, label_XE)
 
         self.play(
+            FadeOut(detail1),
             scooter.animate.shift(4 * LEFT).scale(0.8)
         )
 
-        self.wait()
+        title1 = Tex(r"Impondo o Equilíbrio na Estrutura").to_corner(UL)
+        Sum_F1 =  MathTex(r"{{ \sum \Vec{F} = \Vec{0} }}", font_size=20)
+        Sum_M1 = MathTex(r"{{ \sum M_A = 0 }}", font_size=20)
 
+        eqs1 = VGroup(Sum_F1, Sum_M1).arrange(DOWN).next_to(scooter, RIGHT + UP * 0.5, buff=1)
 
-class Equilibrium(Scene):
-    def construct(self):
-        title = Tex(r"Impondo o Equilíbrio na Estrutura")
-        F = MathTex(r"\sum \Vec{F} = \Vec{0}")
-        M = MathTex(r"\sum M_A = 0")
-        F.font_size = 32
-        M.font_size = 32
-        VGroup(title, F, M).arrange(DOWN)
         self.play(
-            Write(title),
-            Write(F),
-            Write(M)
+            Transform(model, title1),
+            Write(eqs1)
         )
+
+        self.wait(2)
+
+        Sum_F2 = MathTex(r"\sum \Vec{F} = \Vec{0}", r"\Longrightarrow \left\{\begin{array}{lc}\sum F_x = 0 \Longrightarrow X_E = 0 \\ \sum F_y = 0 \Longrightarrow Y_E + Y_A = q\cdot l_1 + F \end{array}\right. } }", font_size=20)
+        Sum_M2 = MathTex(r"\sum M_A = 0", r"\Longrightarrow", r"q\cdot l_1 + F\cdot (l_1+l_2\cdot \cos{\alpha}-l_3\cdot \cos{\beta}) =", r"{{ Y_E }}", r"\cdot (l_1 + l_2\cdot\cos{\alpha} + l_4\cdot\cos{\beta})", font_size=20)
+
+        eqs2 = VGroup(Sum_F2, Sum_M2).arrange(DOWN).next_to(scooter, RIGHT + UP * 0.5, buff=1)
+
+        self.play(
+            TransformMatchingTex(Sum_F1, Sum_F2),
+            TransformMatchingTex(Sum_M1, Sum_M2)
+        )
+
         self.wait()
 
-        transform_F = MathTex(r"\sum \Vec{F} = \Vec{0} \Longrightarrow \left\{\begin{array}{lc}\sum F_x = 0 \Longrightarrow X_E = 0 \\\sum F_y = 0 \Longrightarrow Y_E + Y_A = q\cdot l_1 + F \end{array}\right.")
-        transform_M = MathTex(r"\sum M_A = 0 \Longrightarrow q\cdot l_1 + F\cdot (l_1+l_2\cdot \cos{\alpha}-l_3\cdot \cos{\beta}) = Y_E \cdot (l_1 + l_2\cdot\cos{\alpha} + l_4\cdot\cos{\beta})")
-        transform_F.font_size = 32
-        transform_M.font_size = 32
-        VGroup(transform_F, transform_M).arrange(DOWN)
+        eq_XE = MathTex(r"X_E = 0", font_size=20)
+        eq_YE = MathTex(r"{{ Y_E }}", r"= \dfrac{\dfrac{q\cdot l_1^2}{2} + F\cdot (l_1+l_2\cdot \cos{\alpha}-l_3\cdot \cos{\beta})}{l_1 + l_2\cdot\cos{\alpha} + l_4\cdot\cos{\beta}}", font_size=20)
+        eq_YA1 = MathTex(r"{{ Y_A }}", r"q\cdot l_1 + F -",  r"{{ Y_E }}", font_size=20)
+        eq_YA2 = MathTex(r"{{ Y_A }}", r"= \dfrac{\dfrac{q\cdot l_1^2}{2} + F\cdot \cos{\beta} \cdot (l_3 - l_4) + q\cdot l_1\cdot (l_2\cdot \cos{\alpha} + l_4\cdot\cos{\beta})}{l_1 + l_2\cdot \cos{\alpha} + l_4\cdot \cos{\beta}}", font_size=20)
+        blank = Dot()
+
+        VGroup(eq_XE, blank, eq_YE, eq_YA1, eq_YA2).arrange(DOWN).next_to(eqs2, DOWN, buff=1)
+
         self.play(
-            title.animate.to_corner(UP + LEFT),
-            Transform(F, transform_F),
-            Transform(M, transform_M)
+            Write(eq_XE),
+            Write(eq_YE),
+            Write(eq_YA1)
         )
+
         self.wait()
+
+        self.play(
+            TransformMatchingTex(eq_YA1, eq_YA2)
+        )
+
+        framebox1 = SurroundingRectangle(eq_XE, buff = .1)
+        framebox2 = SurroundingRectangle(eq_YE, buff=.1)
+        framebox3 = SurroundingRectangle(eq_YA2, buff=.1)
+
+        self.play(
+            Create(framebox1)
+        )
+
+        self.play(
+            ReplacementTransform(framebox1, framebox2)
+        )
+
+        self.play(
+            ReplacementTransform(framebox2, framebox3)
+        )
+
+        self.play(
+            FadeOut(framebox3)
+        )
+        
+
+        self.wait(5)
