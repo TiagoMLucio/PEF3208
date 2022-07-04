@@ -4,24 +4,6 @@ import math
 
 from numpy import array, number
 
-class DrawScooter(Scene):
-    def construct(self):
-        path = VMobject()
-        dot = Dot()
-        path.set_points_as_corners([dot.get_center(), dot.get_center()])
-        def update_path(path):
-            previous_path = path.copy()
-            previous_path.add_points_as_corners([dot.get_center()])
-            path.become(previous_path)
-        path.add_updater(update_path)
-        self.add(path, dot)
-        self.play(dot.animate.shift(LEFT * 2))
-        self.wait()
-        self.play(dot.animate.shift((UP + LEFT) * math.sin(math.pi/180 * 45)))
-        self.play(dot.animate.shift(DOWN * math.sin(math.pi/180 * 45) + LEFT * math.sin(math.pi/180 * 45)/math.tan(math.pi/180 * 70)))
-        self.play(dot.animate.shift(RIGHT * 3 * math.cos(math.pi/180 * 70) + UP * 3 * math.sin(math.pi/180 * 70)))
-        self.wait()
-
 class Scooter(Scene):
     def construct(self):
         model = Tex(r"Modelo do Patinete")
@@ -253,43 +235,169 @@ class Scooter(Scene):
 
         eq_XE = MathTex(r"X_E = 0", font_size=20)
         eq_YE = MathTex(r"{{ Y_E }}", r"= \dfrac{\dfrac{q\cdot l_1^2}{2} + F\cdot (l_1+l_2\cdot \cos{\alpha}-l_3\cdot \cos{\beta})}{l_1 + l_2\cdot\cos{\alpha} + l_4\cdot\cos{\beta}}", font_size=20)
-        eq_YA1 = MathTex(r"{{ Y_A }}", r"q\cdot l_1 + F -",  r"{{ Y_E }}", font_size=20)
-        eq_YA2 = MathTex(r"{{ Y_A }}", r"= \dfrac{\dfrac{q\cdot l_1^2}{2} + F\cdot \cos{\beta} \cdot (l_3 - l_4) + q\cdot l_1\cdot (l_2\cdot \cos{\alpha} + l_4\cdot\cos{\beta})}{l_1 + l_2\cdot \cos{\alpha} + l_4\cdot \cos{\beta}}", font_size=20)
-        blank = Dot()
+        eq_YA = MathTex(r"{{ Y_A }}", r"= \dfrac{\dfrac{q\cdot l_1^2}{2} + F\cdot \cos{\beta} \cdot (l_3 - l_4) + q\cdot l_1\cdot (l_2\cdot \cos{\alpha} + l_4\cdot\cos{\beta})}{l_1 + l_2\cdot \cos{\alpha} + l_4\cdot \cos{\beta}}", font_size=20)
 
-        VGroup(eq_XE, blank, eq_YE, eq_YA1, eq_YA2).arrange(DOWN).next_to(eqs2, DOWN, buff=1)
+        eqs3 = VGroup(eq_XE, eq_YE, eq_YA).arrange(DOWN * 2).next_to(eqs2, DOWN, buff=1)
 
         self.play(
             Write(eq_XE),
             Write(eq_YE),
-            Write(eq_YA1)
+            Write(eq_YA)
         )
 
         self.wait()
 
-        self.play(
-            TransformMatchingTex(eq_YA1, eq_YA2)
-        )
-
         framebox1 = SurroundingRectangle(eq_XE, buff = .1)
         framebox2 = SurroundingRectangle(eq_YE, buff=.1)
-        framebox3 = SurroundingRectangle(eq_YA2, buff=.1)
+        framebox3 = SurroundingRectangle(eq_YA, buff=.1)
 
         self.play(
             Create(framebox1)
         )
 
         self.play(
-            ReplacementTransform(framebox1, framebox2)
+            Create(framebox2)
         )
 
         self.play(
-            ReplacementTransform(framebox2, framebox3)
+            Create(framebox3)
         )
 
         self.play(
+            FadeOut(framebox1),
+            FadeOut(framebox2),
             FadeOut(framebox3)
         )
-        
 
         self.wait(5)
+
+        title2 = Tex(r"Cortes na Estrutura").to_corner(UL)
+
+        self.play(
+            Transform(model, title2),
+            FadeOut(eqs1),
+            FadeOut(eqs2),
+            FadeOut(eqs3)
+        )
+        
+        self.wait()
+
+        C_1 = Line(start=UP, end=DOWN, color=PINK).scale(0.1).next_to(dot_A.get_center()).shift(0.8 * LEFT)
+        C_2 = Line(start=(-1 * (RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70))), end=(RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70)), color=PINK).scale(0.1).next_to(dot_D.get_center(), -1.5 * (RIGHT * math.cos(math.pi/180 * 70) + UP * math.sin(math.pi/180 * 70))).shift(0.1 * (RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70)))
+        C_3 = Line(start=(-1 * (RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70))), end=(RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70)), color=PINK).scale(0.1).next_to(dot_D.get_center(), -8 * (RIGHT * math.cos(math.pi/180 * 70) + UP * math.sin(math.pi/180 * 70))).shift(0.1 * (RIGHT * math.sin(math.pi/180 * 70) - UP * math.cos(math.pi/180 * 70)))
+        C_4 = Line(start=((DOWN + LEFT) * math.cos(math.pi/180 * 45)), end=((UP + RIGHT) * math.cos(math.pi/180 * 45)), color=PINK).scale(0.1).next_to(dot_B.get_center(), (UP + LEFT) * math.sin(math.pi/180 * 45))
+
+        label_C1 = MathTex(r"C_1", font_size=20, color=PINK).next_to(C_1, 0.4 * DOWN)
+        label_C2 = MathTex(r"C_2", font_size=20, color=PINK).next_to(C_2, 0.4 * UL)
+        label_C3 = MathTex(r"C_3", font_size=20, color=PINK).next_to(C_3, 0.4 * UL)
+        label_C4 = MathTex(r"C_4", font_size=20, color=PINK).next_to(C_4, 0.4 * UP)
+
+        self.play(
+            Write(C_1),
+            Write(label_C1)
+        )
+        self.play(
+            Write(C_2),
+            Write(label_C2)
+        )
+        self.play(
+            FadeOut(label_l4),
+            FadeOut(beta),
+            FadeOut(beta_label),
+            Write(C_3),
+            Write(label_C3)
+        )
+        self.play(
+            FadeOut(label_l2),
+            FadeOut(alpha),
+            FadeOut(alpha_label),
+            Write(C_4),
+            Write(label_C4)
+        )
+
+        self.wait(2)
+
+        retangle_c1 = SurroundingRectangle(Line(start=C_1.get_center(), end=dot_A.get_center()))
+
+        self.play(
+            Create(retangle_c1)
+        )
+
+        dot_A2 = Dot()
+        dot_C1 = Dot().next_to(dot_A2, LEFT * 15)
+        line_AC1 = Line(start=dot_A2.get_center(), end=dot_C1.get_center())
+
+        cut_c1 = VGroup(dot_A2, dot_C1, line_AC1).next_to(scooter, RIGHT * 15)
+
+        label_A2 = Tex(r"A", font_size=20).next_to(dot_A2, 0.5 * RIGHT)
+        label_C1_2 = MathTex(r"C_1", font_size=20).next_to(dot_C1, 0.5 * DOWN)
+
+        Y_A2 = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_A2, DOWN)
+        label_YA2 = MathTex(r"Y_A", font_size=24, color=ORANGE).next_to(Y_A2, 0.4 * LEFT)
+
+        f_0_2 = getArrow(dot_A2, 0)
+        f_1_2 = getArrow(dot_A2, -1)
+        f_2_2 = getArrow(dot_A2, -2)
+        f_3_2 = getArrow(dot_A2, -3)
+        f_4_2 = getArrow(dot_A2, -4)
+        f_5_2 = getArrow(dot_A2, -5)
+        f_6_2 = getArrow(dot_A2, -6)
+        f_7_2 = getArrow(dot_A2, -7)
+        f_8_2 = getArrow(dot_A2, -8)
+
+
+        f_line2 = Line(f_0_2.get_start(), f_8_2.get_start(), color=BLUE)
+        label_f2 = MathTex(r"q", font_size=24, color=BLUE).next_to(f_0_2, 0.5 * RIGHT + 0.01 * UP)
+
+        self.play(
+            Write(dot_A2), 
+            Write(line_AC1)
+        )
+
+        self.play(
+            Write(dot_C1),
+            Write(label_A2),
+            Write(label_C1_2),
+        )
+
+        self.play(
+            Create(Y_A2),
+            Write(label_YA2)
+        )
+
+        self.play(
+            Create(f_0_2),
+            Create(f_1_2),
+            Create(f_2_2),
+            Create(f_3_2),
+            Create(f_4_2),
+            Create(f_5_2),
+            Create(f_6_2),
+            Create(f_7_2),
+            Create(f_8_2),
+            Create(f_line2),
+            Create(label_f2)
+        )
+
+        N_1 = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_C1, LEFT * 0.5, buff=.5)
+        V_1 = Arrow(start=DOWN, end=UP, max_tip_length_to_length_ratio=0.1, color=GREEN).scale(0.8).next_to(dot_C1, LEFT * 0.5).shift(0.5 * UP)
+        M_1 = CurvedArrow(1.2 * DOWN, 1.2 * UP, radius= -2, color=PURPLE).scale(0.6).next_to(dot_C1, LEFT).shift(0.4 * LEFT)
+
+        label_N1 = MathTex(r"N_1", font_size=24, color=RED).next_to(N_1, 0.5 * LEFT)
+        label_V1 = MathTex(r"V_1", font_size=24, color=GREEN).next_to(V_1, 0.5 * UP)
+        label_M1 = MathTex(r"M_1", font_size=24, color=PURPLE).next_to(M_1, 0.5 * UP).shift(0.2 * LEFT)
+
+
+        self.play(
+            Create(N_1),
+            Create(V_1),
+            Create(M_1)
+        )
+
+        self.play(
+            Write(label_N1),
+            Write(label_V1),
+            Write(label_M1)
+        )
+
+        self.wait(2)
