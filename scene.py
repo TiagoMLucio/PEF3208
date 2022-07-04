@@ -456,7 +456,128 @@ class Scooter(Scene):
 
         self.wait(2)
 
+        self.play(
+            FadeOut(eqs_C1),
+            FadeOut(cut_c1),
+            FadeOut(subtitle1),
+            FadeOut(retangle_c1)
+        )
 
+        self.wait()
 
+        retangle_c2 = SurroundingRectangle(Line(start=C_2.get_center(), end=dot_D.get_center())).rotate(-PI * 20/180)
 
+        self.play(
+            Create(retangle_c2)
+        )
 
+        dot_D2 = Dot()
+        dot_C2 = Dot().next_to(dot_D2, LEFT * 15)
+        line_DC2 = Line(start=dot_D2.get_center(), end=dot_C2.get_center())
+
+        VGroup(dot_D2, dot_C2, line_DC2).next_to(scooter, RIGHT * 15)
+
+        label_D2 = Tex(r"D", font_size=20).next_to(dot_D2, 0.5 * DL)
+        label_C2_2 = MathTex(r"C_2", font_size=20).next_to(dot_C2, 0.5 * DOWN)
+
+        self.add(
+            dot_D2, line_DC2, dot_C2, label_D2, label_C2_2
+        )
+
+        F2_X = Arrow(start=RIGHT * 0.5, end=LEFT * 0.5, max_tip_length_to_length_ratio=0.2, color=BLUE).scale(2).next_to(dot_D2, 0.5 * RIGHT)
+        F2_Y = Arrow(start=UP * 0.5, end=DOWN * 0.5, max_tip_length_to_length_ratio=0.2, color=BLUE).scale(2 / math.tan(70 * math.pi/180)).next_to(dot_D2, 0.5 * UP)
+
+        label_F2X = MathTex(r"F\cdot \sin{\beta}", font_size=20, color=BLUE).next_to(F2_X, 0.5 * DOWN)
+        label_F2Y = MathTex(r"F\cdot \cos{\beta}", font_size=20, color=BLUE).next_to(F2_Y, 0.5 * LEFT)
+
+        self.play(
+            Create(F2_X),
+            Create(F2_Y),
+            Write(label_F2X),
+            Write(label_F2Y)
+        )
+
+        self.wait()
+
+        N_2 = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_C2, LEFT * 0.5, buff=.5)
+        V_2 = Arrow(start=DOWN, end=UP, max_tip_length_to_length_ratio=0.1, color=GREEN).scale(0.8).next_to(dot_C2, LEFT * 0.5).shift(0.5 * UP)
+        M_2 = CurvedArrow(1.2 * DOWN, 1.2 * UP, radius= -2, color=PURPLE).scale(0.6).next_to(dot_C2, LEFT).shift(0.4 * LEFT)
+
+        label_N2 = MathTex(r"N_2", font_size=24, color=RED).next_to(N_2, 0.5 * LEFT)
+        label_V2 = MathTex(r"V_2", font_size=24, color=GREEN).next_to(V_2, 0.5 * UP)
+        label_M2 = MathTex(r"M_2", font_size=24, color=PURPLE).next_to(M_2, 0.5 * UP).shift(0.2 * LEFT)
+        
+        self.play(
+            Create(N_2),
+            Create(V_2),
+            Create(M_2)
+        )
+
+        self.play(
+            Write(label_N2),
+            Write(label_V2),
+            Write(label_M2)
+        )
+
+        x2_base = Line(UP, DOWN).scale(0.2).next_to(dot_D2, 2 * DOWN)
+        x2_axis = Arrow(start=RIGHT, end=LEFT, max_tip_length_to_length_ratio=0.1).scale(0.5).next_to(x2_base, LEFT).shift(0.25 * RIGHT)
+        label_x2 = MathTex(r"x_2", font_size=24).next_to(x2_axis, 0.4 * UP)
+
+        self.play(
+            Create(x2_base),
+            Create(x2_axis),
+        )
+
+        self.play(
+            Write(label_x2)
+        )
+
+        cut_c2 = VGroup(dot_D2, dot_C2, line_DC2, label_D2, label_C2_2, F2_X, F2_Y, label_F2X, label_F2Y, 
+        N_2, V_2, M_2, label_N2, label_V2, label_M2, x2_base, x2_axis, label_x2)
+
+        self.wait(2)
+
+        self.play(
+            cut_c2.animate.to_corner(UR).scale(0.6)
+        )
+
+        self.wait()
+
+        subtitle2 = Tex(r"Impondo Equilíbrio na Subestrutura", font_size=24).next_to(cut_c2, 2 * DOWN)
+
+        eq_N2 = MathTex(r"N_2 = - F\cdot \cos{\beta}", font_size=20)
+        eq_V2 = MathTex(r"V_2 = F\cdot \sin{\beta}", font_size=20)
+        eq_M2 = MathTex(r"M_2 = -F\cdot \sin{\beta}\cdot x_2", font_size=20)
+
+        eqs_C2 = VGroup(eq_N2, eq_V2, eq_M2).arrange(DOWN).next_to(subtitle2, 2 * DOWN)
+
+        self.play(
+            Write(subtitle2)            
+        )
+
+        self.play(
+            Write(eqs_C2)
+        )
+
+        self.wait()
+
+        framebox5 = SurroundingRectangle(eqs_C2, buff = .1)
+
+        self.play(
+            Create(framebox5)
+        )
+
+        self.play(
+            FadeOut(framebox5)
+        )
+
+        self.wait(2)
+
+        self.play(
+            FadeOut(eqs_C2),
+            FadeOut(cut_c2),
+            FadeOut(subtitle2),
+            FadeOut(retangle_c2)
+        )
+
+        self.wait()
