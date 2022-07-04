@@ -426,5 +426,37 @@ class Scooter(Scene):
 
         self.wait()
 
-        
+        subtitle1 = Tex(r"Impondo Equilíbrio na Subestrutura", font_size=24).next_to(cut_c1, 2 * DOWN)
+
+        eq_N1 = MathTex(r"N_1 = 0", font_size=20)
+        eq_V1 = MathTex(r"V_1 = q\cdot x_1 - Y_A", font_size=20)
+        eq_M1 = MathTex(r"M_1 = \dfrac{q\cdot x_1^2}{2}", font_size=20)
+
+        eqs_C1 = VGroup(eq_N1, eq_V1, eq_M1).arrange(DOWN).next_to(subtitle1, 2 * DOWN)
+
+        self.play(
+            Write(subtitle1)            
+        )
+
+        self.play(
+            Write(eqs_C1)
+        )
+
+        self.wait()
+
+        framebox4 = SurroundingRectangle(eqs_C1, buff = .1)
+
+        self.play(
+            Create(framebox4)
+        )
+
+        self.play(
+            FadeOut(framebox4)
+        )
+
+        self.wait(2)
+
+
+
+
 
