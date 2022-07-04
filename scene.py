@@ -270,13 +270,12 @@ class Scooter(Scene):
             FadeOut(framebox3)
         )
 
-        self.wait(5)
+        self.wait(3)
 
         title2 = Tex(r"Cortes na Estrutura").to_corner(UL)
 
         self.play(
             Transform(model, title2),
-            FadeOut(eqs1),
             FadeOut(eqs2),
             FadeOut(eqs3)
         )
@@ -821,6 +820,36 @@ class Scooter(Scene):
 
         self.wait()
 
+        title3 = Tex(r"Momentos Fletores Máximos por Subestrutura").to_corner(UL)
 
+        self.play(
+            Transform(model, title3)
+        )
 
+        M_max1 = MathTex(r"M_{max_1} = \dfrac{q\cdot l_1^2}{2}", font_size=20)
+        M_max2 = MathTex(r"M_{max_2} = -F\cdot \sin{\beta}\cdot l_3", font_size=20)
+        M_max3 = MathTex(r"M_{max_3} = Y_E\cdot \cos{\beta}\cdot l_4", font_size=20)
+        M_max4 = MathTex(r"M_{max_4} = \dfrac{q\cdot l_1^2}{2}", font_size=20)
+
+        M_maxs = VGroup(M_max1, M_max2, M_max3, M_max4).arrange(DOWN).next_to(scooter, RIGHT * 10)
+
+        self.play(
+            Write(M_maxs)
+        )
+ 
+        framebox8 = SurroundingRectangle(M_maxs, buff = .1)
+
+        self.play(
+            Create(framebox8)
+        )
+
+        self.play(
+            FadeOut(framebox8)
+        )
+
+        self.add(
+            FadeOut(M_maxs)
+        )
+
+        self.wait()
 
