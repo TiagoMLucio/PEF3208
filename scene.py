@@ -876,7 +876,7 @@ class Scooter(Scene):
 
         v_P = MathTex(r"P = 1000\ N\ ", r"\textrm{(peso da pessoa)}", font_size=20).next_to(VGroup(vs1, vs2), DOWN * 2)
         v_q2 = MathTex(r"q = \dfrac{P - F}{l_1} \Longrightarrow", font_size=20).next_to(v_P, DOWN)
-        v_q3 = MathTex(r"q = 1,242\ N/m", font_size=20).next_to(v_q2, RIGHT)
+        v_q3 = MathTex(r"q = 1242\ N/m", font_size=20).next_to(v_q2, RIGHT)
 
         self.play(
             Write(vs1),
