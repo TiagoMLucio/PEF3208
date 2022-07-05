@@ -1,3 +1,4 @@
+from multiprocessing.reduction import ACKNOWLEDGE
 from telnetlib import DO
 from manim import *
 import math
@@ -6,6 +7,44 @@ from numpy import array, number
 
 class Scooter(Scene):
     def construct(self):
+
+        dicipline = Tex(r"PEF3208 - Fundamentos de Mecânica das Estruturas", font_size=32)
+
+        group_num = Tex(r"Grupo 12 - Turma 01", font_size=32)
+
+        hess = Text(r"Gustavo Hess Vaz de Lima - 12550601", font_size=20)
+        assme = Text(r"Henrique de Andrade Assme - 11339822", font_size=20)
+        bressan = Text(r"Pedro Henrique Marinho Bressan - 12551540", font_size=20)
+        lucio = Text(r"Tiago Mariotto Lucio - 12550556", font_size=20)
+
+        names = VGroup(hess, assme, bressan, lucio).arrange(DOWN)
+
+        info_container = VGroup(dicipline, group_num, names).arrange(DOWN * 2)
+
+        basic_description0 = Tex(r"Da caracterização estrutural de um patinete", font_size=36)
+        basic_description1 = Tex(r"Uma análise dos esforços envolvidos e implicações para tensões de segurança", font_size=32)
+
+        descriptions = VGroup(basic_description0, basic_description1).arrange(DOWN)
+
+        first_page = VGroup(descriptions, info_container).arrange(DOWN * 6).scale(0.8)
+
+        banner = ManimBanner().scale(0.2).to_corner(DR).shift(LEFT)
+
+        self.play(
+            Write(first_page), banner.create()
+        )
+        self.play(banner.expand())
+        self.wait()
+        self.play(Unwrite(banner))
+
+        self.wait()
+
+        self.play(
+            FadeOut(
+                first_page
+            )
+        )
+
         model = Tex(r"Modelo do Patinete")
         detail1 = Tex(r"Modelo Geométrico", ).to_corner(UP + RIGHT)
 
@@ -480,8 +519,8 @@ class Scooter(Scene):
         label_D2 = Tex(r"D", font_size=20).next_to(dot_D2, 0.5 * DL)
         label_C2_2 = MathTex(r"C_2", font_size=20).next_to(dot_C2, 0.5 * DOWN)
 
-        self.add(
-            dot_D2, line_DC2, dot_C2, label_D2, label_C2_2
+        self.play(
+            Write(dot_D2), Write(line_DC2), Write(dot_C2), Write(label_D2), Write(label_C2_2)
         )
 
         F2_X = Arrow(start=RIGHT * 0.5, end=LEFT * 0.5, max_tip_length_to_length_ratio=0.2, color=BLUE).scale(2).next_to(dot_D2, 0.5 * RIGHT)
@@ -597,8 +636,8 @@ class Scooter(Scene):
         label_E2 = Tex(r"E", font_size=20).next_to(dot_E2, 0.5 * DL)
         label_C3_2 = MathTex(r"C_3", font_size=20).next_to(dot_C3, 0.5 * DOWN)
 
-        self.add(
-            dot_E2, line_C3E, dot_C3, label_E2, label_C3_2
+        self.play(
+            Write(dot_E2), Write(line_C3E), Write(dot_C3), Write(label_E2), Write(label_C3_2)
         )
 
         Y_E2 = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, DOWN)
@@ -714,8 +753,8 @@ class Scooter(Scene):
         label_B2 = Tex(r"B", font_size=20).next_to(dot_B2, 0.5 * DL)
         label_C4_2 = MathTex(r"C_4", font_size=20).next_to(dot_C4, 0.5 * DOWN)
 
-        self.add(
-            dot_B2, line_BC4, dot_C4, label_B2, label_C4_2
+        self.play(
+            Write(dot_B2), Write(line_BC4), Write(dot_C4), Write(label_B2), Write(label_C4_2)
         )
 
         N_aux = Arrow(start=LEFT, end=RIGHT, max_tip_length_to_length_ratio=0.1, color=RED).scale(0.8).next_to(dot_B2, RIGHT * 0.5, buff=.5)
@@ -860,21 +899,40 @@ class Scooter(Scene):
             Transform(model, title4)
         )
 
-        v_l1 = MathTex(r"l_1 = ", font_size=20)
-        v_l2 = MathTex(r"l_2 = ", font_size=20)
-        v_l3 = MathTex(r"l_3 = ", font_size=20)
-        v_l4 = MathTex(r"l_4 = ", font_size=20)
-        v_alpha = MathTex(r"\alpha = 45^\circ", font_size=20)
-        v_beta = MathTex(r"\beta = 75^\circ", font_size=20)
-        v_F = MathTex(r"F = 20\ N", font_size=20)
-        v_q = MathTex(r"q = ", font_size=20)
+        v_l1 = MathTex(r"l_1 = 0,765\ m", font_size=20)
+        v_l2 = MathTex(r"l_2 = 0,440\ m", font_size=20)
+        v_l3 = MathTex(r"l_3 = 0,845\ m", font_size=20)
+        v_l4 = MathTex(r"l_4 = 0,362\ m", font_size=20)
+        v_alpha = MathTex(r"\alpha = 54^\circ", font_size=20)
+        v_beta = MathTex(r"\beta = 81^\circ", font_size=20)
+        v_F = MathTex(r"F = 50\ N", font_size=20)
+        v_q1 = MathTex(r"q = 1242\ N/m", font_size=20)
 
         vs1 = VGroup(v_l1, v_l2, v_l3, v_l4).arrange(DOWN).next_to(scooter, 6 * RIGHT)
-        vs2 = VGroup(v_alpha, v_beta, v_F, v_q).arrange(DOWN).next_to(vs1, 4 * RIGHT)
+        vs2 = VGroup(v_alpha, v_beta, v_F, v_q1).arrange(DOWN).next_to(vs1, 4 * RIGHT)
+
+        v_P = MathTex(r"P = 1000\ N\ ", r"\textrm{(peso da pessoa)}", font_size=20).next_to(VGroup(vs1, vs2), DOWN * 2)
+        v_q2 = MathTex(r"q = \dfrac{P - F}{l_1} \Longrightarrow", font_size=20).next_to(v_P, DOWN)
+        v_q3 = MathTex(r"q = 1,242\ N/m", font_size=20).next_to(v_q2, RIGHT)
 
         self.play(
             Write(vs1),
-            Write(vs2)
+            Write(v_alpha),
+            Write(v_beta),
+            Write(v_F)
+        )
+
+        self.play(
+            Write(v_P)
+        )
+
+        self.play(
+            Write(v_q2),
+            Write(v_q3)
+        )
+
+        self.play(
+            TransformMatchingTex(v_q3, v_q1)
         )
 
         self.wait()
@@ -888,14 +946,16 @@ class Scooter(Scene):
         vss = VGroup(vs1, vs2, framebox9)
 
         self.play(
-            vss.animate.to_corner(UR)
+            vss.animate.to_corner(UR),
+            FadeOut(v_P),
+            FadeOut(v_q2)
         )
 
         subtitle5 = Tex(r"Reações de Apoio", color=ORANGE, font_size=20).to_corner(UL)
 
-        eq_YE2 = MathTex(r"Y_E = ", color=ORANGE, font_size=20)
-        eq_YA2 = MathTex(r"Y_A = ", color=ORANGE, font_size=20)
-        eq_XE2 = MathTex(r"X_E = ", color=ORANGE, font_size=20)
+        eq_YE2 = MathTex(r"Y_E = 377,7\ N", color=ORANGE, font_size=20)
+        eq_YA2 = MathTex(r"Y_A = 622,4\ N", color=ORANGE, font_size=20)
+        eq_XE2 = MathTex(r"X_E = 0", color=ORANGE, font_size=20)
 
         subtitle6 = Tex(r"Momento Fletor Máximo", color=PURPLE, font_size=20).to_corner(UL)
 
@@ -939,7 +999,7 @@ class Scooter(Scene):
         title7 = Tex(r"Diagramas de Esforços Solicitantes").to_corner(UL)
 
         self.play(
-            Transform(model, title7),
+            # Transform(model, title7),
             FadeOut(scooter),
             FadeOut(vss),
             FadeOut(C_1),
@@ -950,8 +1010,30 @@ class Scooter(Scene):
             FadeOut(label_C2),
             FadeOut(label_C3),
             FadeOut(label_C4),
-            FadeOut(equations)
+            FadeOut(equations),
+            FadeOut(framebox10),
+            FadeOut(arrow_toB),
+            FadeOut(model)
         )
 
-        self.wait(5)
+        self.wait()
 
+        ty = Tex(r"Agradecemos pela atenção!", font_size=60).to_corner(UP).shift(DOWN)
+
+        acknowledgments0 = Tex(r"Music by Vincent Rubinetti", font_size=20)
+        acknowledgments3 = Tex(r"Stream the music on Spotify:", font_size=20)
+        acknowledgments1 = Tex(r"Download the music on Bandcamp:", font_size=20)
+        acknowledgments2 = Tex(r"https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown", font_size=20)
+        acknowledgments3 = Tex(r"Stream the music on Spotify:", font_size=20)
+        acknowledgments4 = Tex(r"https://open.spotify.com/album/1dVyjwS8FBqXhRunaG5W5u", font_size=20)
+
+        VGroup(acknowledgments0, acknowledgments1, acknowledgments2, acknowledgments3, acknowledgments4).arrange(DOWN).to_corner(DL)
+
+        banner = ManimBanner().to_corner(DR).scale(0.25)
+        self.play(Write(ty))
+        self.play(banner.create(), Write(acknowledgments0))
+        self.play(banner.expand(), Write(acknowledgments1), Write(acknowledgments2))
+        self.wait()
+        self.play(Write(acknowledgments3), Write(acknowledgments4))
+
+        self.wait(5)
