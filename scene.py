@@ -71,19 +71,19 @@ class Scooter(Scene):
 
         self.play(
             Write(dot_A),
-            Write(line_AB), run_time=0.5
+            Write(line_AB), run_time=0.7
         )
         self.play(
             Write(dot_B),
-            Write(line_BC), run_time=0.5
+            Write(line_BC), run_time=0.7
         )
         self.play(
             Write(line_CD),
-            Write(line_CE), run_time=0.5
+            Write(line_CE), run_time=0.7
         )
         self.play(
             Write(dot_D),
-            Write(dot_E), run_time=0.5
+            Write(dot_E), run_time=0.7
         )
 
         label_A = Tex(r"A", font_size=24).next_to(dot_A, 0.5 * RIGHT)
@@ -97,7 +97,7 @@ class Scooter(Scene):
             Write(label_B),
             Write(label_C),
             Write(label_D),
-            Write(label_E), run_time=0.5
+            Write(label_E), run_time=0.7
         )
 
         label_l1 = MathTex(r"l_1", font_size=24).next_to(line_AB, DOWN * 0.5)
@@ -109,13 +109,13 @@ class Scooter(Scene):
             Write(label_l1),
             Write(label_l2),
             Write(label_l3),
-            Write(label_l4), run_time=0.5
+            Write(label_l4), run_time=0.7
         )
 
         dashed_line = DashedLine(dot_E, dot_B, dash_length=0.05)
 
         self.play(
-            Write(dashed_line), run_time=0.5
+            Write(dashed_line), run_time=0.7
         )
 
         alpha = Angle(line_BC, dashed_line, radius=0.2, quadrant=(1, -1))
@@ -123,7 +123,7 @@ class Scooter(Scene):
 
         self.play(
             Write(alpha),
-            Write(beta), run_time=0.5
+            Write(beta), run_time=0.7
         )
 
         alpha_label = MathTex(r"\alpha").scale(0.4).next_to(alpha, LEFT * 0.2 - DOWN * 0.01)
@@ -131,7 +131,7 @@ class Scooter(Scene):
 
         self.play(
             Write(alpha_label),
-            Write(beta_label), run_time=0.5
+            Write(beta_label), run_time=0.7
         )
 
         self.wait()
@@ -163,7 +163,7 @@ class Scooter(Scene):
             Write(f_4),
             Write(f_5),
             Write(f_6),
-            Write(f_line), run_time=0.5
+            Write(f_line), run_time=0.7
         )
 
         label_F = MathTex(r"F", font_size=24, color=BLUE).next_to(F, 0.5 * RIGHT)
@@ -171,7 +171,7 @@ class Scooter(Scene):
 
         self.play(
             Write(label_F),
-            Write(label_f), run_time=0.5
+            Write(label_f), run_time=0.7
         )
 
         self.wait()
@@ -197,7 +197,7 @@ class Scooter(Scene):
             Write(joint2_line),
             Write(joint1_line1),
             Write(joint1_line2),
-            Write(joint1_line3), run_time=0.5
+            Write(joint1_line3), run_time=0.7
         )
 
         Y_E = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(joint1_line, DOWN)
@@ -212,7 +212,7 @@ class Scooter(Scene):
             Transform(detail1, detail4),
             Write(Y_E),
             Write(Y_A),
-            Write(X_E), run_time=0.5
+            Write(X_E), run_time=0.7
         )
 
         label_YE = MathTex(r"Y_E", font_size=24, color=ORANGE).next_to(Y_E, 0.4 * LEFT)
@@ -222,7 +222,7 @@ class Scooter(Scene):
         self.play(
             Write(label_YE),
             Write(label_YA),
-            Write(label_XE), run_time=0.5
+            Write(label_XE), run_time=0.7
         )
 
         self.wait()
@@ -1018,9 +1018,9 @@ class Scooter(Scene):
         VGroup(acknowledgments0, acknowledgments1, acknowledgments2, acknowledgments3, acknowledgments4).arrange(DOWN).to_corner(DL)
 
         banner = ManimBanner().to_corner(DR).scale(0.25)
-        self.play(Write(ty), run_time=0.5)
-        self.play(banner.create(), Write(acknowledgments0), Write(git), run_time=0.5)
-        self.play(banner.expand(), Write(acknowledgments1), Write(acknowledgments2), run_time=0.5)
-        self.play(Write(acknowledgments3), Write(acknowledgments4), run_time=0.5)
+        self.play(Write(ty), run_time=0.7)
+        self.play(banner.create(), Write(acknowledgments0), Write(git), run_time=0.7)
+        self.play(banner.expand(), Write(acknowledgments1), Write(acknowledgments2), run_time=0.7)
+        self.play(Write(acknowledgments3), Write(acknowledgments4), run_time=0.7)
 
         self.wait(4)
