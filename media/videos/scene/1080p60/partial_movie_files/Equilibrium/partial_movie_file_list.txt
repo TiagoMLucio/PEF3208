@@ -1,5 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/manim/project/media/videos/scene/1080p60/partial_movie_files/Equilibrium/450974505_3492459365_223132457.mp4'
-file 'file:/manim/project/media/videos/scene/1080p60/partial_movie_files/Equilibrium/34786186_3503346753_79939850.mp4'
-file 'file:/manim/project/media/videos/scene/1080p60/partial_movie_files/Equilibrium/34786186_611977738_840145302.mp4'
-file 'file:/manim/project/media/videos/scene/1080p60/partial_movie_files/Equilibrium/34786186_3503346753_3256985357.mp4'
