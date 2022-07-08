@@ -610,17 +610,17 @@ class Scooter(Scene):
             Write(dot_E2), Write(line_C3E), Write(dot_C3), Write(label_E2), Write(label_C3_2), run_time=0.95
         )
 
-        Y_E2 = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, DOWN)
-        X_E2 = Arrow(start=LEFT * 0.075, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, LEFT * 1.5) 
+        Y_E2Y = Arrow(start=DOWN * 0.5, end=UP * 0.5, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, DOWN)
+        Y_E2X = Arrow(start=LEFT * 0.075, max_tip_length_to_length_ratio=0.2, color=ORANGE).next_to(dot_E2, LEFT * 1.5) 
 
-        label_YE2 = MathTex(r"Y_E", font_size=24, color=ORANGE).next_to(Y_E2, 0.4 * LEFT)
-        label_XE2 = MathTex(r"X_E", font_size=24, color=ORANGE).next_to(X_E2, 0.4 * DOWN)
+        label_YE2Y = MathTex(r"Y_E\cdot \sin(\beta)", font_size=24, color=ORANGE).next_to(Y_E2Y, 0.4 * LEFT)
+        label_YE2X = MathTex(r"Y_E\cdot \cos(\beta)", font_size=24, color=ORANGE).next_to(Y_E2X, 0.4 * UP)
 
         self.play(
-            Create(Y_E2),
-            Create(X_E2),
-            Write(label_YE2),
-            Write(label_XE2), run_time=0.95
+            Create(Y_E2Y),
+            Create(Y_E2X),
+            Write(label_YE2Y),
+            Write(label_YE2X), run_time=0.95
         )
 
         self.wait()
@@ -645,7 +645,7 @@ class Scooter(Scene):
             Write(label_M3), run_time=0.95
         )
 
-        x3_base = Line(UP, DOWN).scale(0.2).next_to(Y_E2, DOWN)
+        x3_base = Line(UP, DOWN).scale(0.2).next_to(Y_E2Y, DOWN)
         x3_axis = Arrow(start=LEFT, end=RIGHT, max_tip_length_to_length_ratio=0.1).scale(0.5).next_to(x3_base, RIGHT).shift(0.25 * LEFT)
         label_x3 = MathTex(r"x_3", font_size=24).next_to(x3_axis, 0.4 * UP)
 
@@ -655,7 +655,7 @@ class Scooter(Scene):
             Write(label_x3), run_time=0.95
         )
 
-        cut_c3 = VGroup(dot_E2, dot_C3, line_C3E, label_E2, label_C3_2, Y_E2, X_E2, label_YE2, label_XE2, 
+        cut_c3 = VGroup(dot_E2, dot_C3, line_C3E, label_E2, label_C3_2, Y_E2Y, Y_E2X, label_YE2Y, label_YE2X, 
         N_3, V_3, M_3, label_N3, label_V3, label_M3, x3_base, x3_axis, label_x3)
 
         self.wait()
